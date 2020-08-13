@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Student List</title>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+</head>
+<body>
+
+	<div class="container my-2">
+		<table border="1">
+
+			<tr>
+				<th>Id</th>
+				<th>UserName</th>
+				<th>PassWord</th>
+
+			</tr>
+			<tr th:each="student:${listOfStudent}">
+				<td th:text="${student.ID_STUDENT}" />
+				<td th:text="${student.username}" />
+				<td th:text="${student.password}" />
+			</tr>
+
+		</table>
+
+
+		<div th:if="${totalPages > 1}">
+			<div>
+				<div>Total Employees: [[${totalItems}]]</div>
+				<div>
+					<span th:each="i: ${#numbers.sequence(1,totalPages)}"> <a
+						th:if="${currentPage != i}" th:href="@{'/page/' + ${i} }">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp;
+						&nbsp;
+					</span>
+				</div>
+				<div class="col-sm-1">
+					<a th:if="${currentPage < totalPages}"
+						th:href="@{'/page/' + ${currentPage + 1} + '?sortField=' }">Next</a> <span
+						th:unless="${currentPage < totalPages}">Next</span>
+				</div>
+
+				<div class="col-sm-1">
+					<a th:if="${currentPage <totalPages}"
+						th:href="@{'/page/' + ${totalPages} }">Last</a> <span
+						th:unless="${currentPage < totalPages}">Last</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>
